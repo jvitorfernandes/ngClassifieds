@@ -1,8 +1,8 @@
 
 const classifiedsCtrl = 
       app.controller('classifiedsCtrl', 
-                    ['$scope', '$http', 'classifiedsFac', '$mdSidenav', '$mdToast', 
-                    function($scope, $http, classifiedsFac, $mdSidenav, $mdToast){
+                    ['$scope', '$http', 'classifiedsFac', '$mdSidenav', '$mdToast', '$mdDialog', 
+                    function($scope, $http, classifiedsFac, $mdSidenav, $mdToast, $mdDialog){
 
     
     classifiedsFac.getClassifieds().then(function(classifieds){
@@ -41,6 +41,22 @@ const classifiedsCtrl =
         $scope.classified = {};
         $scope.toggleSideBar();
         showToast("Edit saved");
-    }
+    };
+                        
+    $scope.deleteClassified = function(event, classified){
+        var index = $scope.classifieds.indexOf(classified);
+        var confirm = $mdDialog.confirm()
+            .title('Are you sure you want to delete ' + classified.title + '?')
+            .ok('Yes')
+            .cancel('No')
+            .targetEvent(event);
+        $mdDialog.show(confirm).then(function(){
+            $scope.classifieds.splice(index, 1);
+            
+        }, function(){
+            
+        });
+        
+    };
                         
 }]);

@@ -5,3 +5,17 @@ button .material-icons {
 md-sidenav {
     margin-top: 64px;
 }
+
+#clearButton {
+    margin-top:12px;
+}
+
+md-input-container {
+    margin-left: 40px;
+}
+
+.layout-align-center-center, .layout-align-end-center, .layout-align-space-around-center, .layout-align-space-between-center, .layout-align-start-center {
+    -webkit-box-align: initial;
+    -webkit-align-items: initial; 
+    align-items: initial; 
+}

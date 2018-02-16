@@ -2,129 +2,16 @@
 <html>
 <head>
     <title>ngClassifieds</title>
+
     
     <link rel="stylesheet" href="node_modules/angular-material/angular-material.min.css">
     <link rel="stylesheet" href="node_modules/mdi/css/materialdesignicons.min.css" media="all" >
     <link rel="stylesheet" href="css/style.css">
     
 </head>
-<body ng-app="ngClassifieds" ng-controller="classifiedsCtrl">
+<body ng-app="ngClassifieds">
     
-    <md-toolbar>
-        <div class="md-toolbar-tools">
-            <p><strong>ngClassifieds</strong></p>
-            
-            <md-button ng-click="toggleSideBar()">
-                <md-icon class="mdi mdi-plus-circle"></md-icon>
-                New Classified
-            </md-button>
-            
-            <md-button ng-click="showFilters=true">
-                <md-icon class="mdi mdi-magnify"></md-icon>
-                Filters
-            </md-button>
-        </div>
-    </md-toolbar>
-    
-    <div class="filters" layout="row" layout-align="center center" ng-show="showFilters">
-
-            <md-input-container>
-                <label for="">Enter search term</label>
-                <input type="text" ng-model="classifiedsFilter">
-            </md-input-container>
-
-            <md-input-container>
-                <label for="">Category</label>
-                <md-select ng-model="selectedCategory">
-                    <md-option ng-repeat="category in categories" value="{{category}}">
-                    {{category}}
-                    </md-option>
-                </md-select>
-            </md-input-container>
-            
-            <md-input-container id="clearButton">
-                <md-button class="md-warn" ng-click="selectedCategory=''; classifiedsFilter='';">
-                Clear
-                </md-button>
-            </md-input-container>
-    </div>
-    
-    <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-open="sidenavOpen">
-      <md-toolbar class="md-theme-light">
-        <h1 class="md-toolbar-tools">Add a classified</h1>
-      </md-toolbar>
-      <md-content layout-padding>
-        <form>
-          <md-input-container>
-            <label for="title">Title</label>
-            <input type="text" id="title"
-                   ng-model="classified.title" md-autofocus>
-          </md-input-container>
-          <md-input-container>
-            <label for="price">Price</label>
-            <input type="text" id="price"
-                 ng-model="classified.price">
-          </md-input-container>
-          <md-input-container>
-            <label for="description">Description</label>
-            <textarea type="text" id="description"
-                  ng-model="classified.description">
-            </textarea>
-          </md-input-container>
-          <md-input-container>
-            <label for="image">Image Link</label>
-            <input type="text" id="image"
-                  ng-model="classified.image">
-          </md-input-container>
-          <md-button ng-if="!editing" ng-click="saveClassified(classified)" class="md-primary">
-            Save
-          </md-button>
-          <md-button ng-if="editing" ng-click="saveEdit()" class="md-primary">
-            Save Edit
-          </md-button>
-          <md-button ng-click="toggleSideBar()" class="md-warn">
-            Cancel
-          </md-button>
-        </form>
-      </md-content>
-    </md-sidenav>
-    
-    <md-content class="md-padding" layout="row" layout-wrap>
-        <md-card ng-repeat="classified in classifieds 
-                           | filter:classifiedsFilter
-                           | filter:selectedCategory " flex="30" class="classified">
-            <img ng-src="{{classified.image}}" alt="">
-            <md-card-content>
-                <div class="classified-info" ng-show="!showContact">
-                    <h2 class="md-title">{{classified.title}}</h2>
-                    <h3>{{classified.price | currency}}</h3>
-                    <p>{{classified.description}}</p>
-                </div>
-                
-                <div class="classified-contact" ng-show="showContact">
-                    <p><md-icon class="mdi mdi-account"></md-icon>{{classified.contact.name}}</p>
-                    <p><md-icon class="mdi mdi-phone"></md-icon>{{classified.contact.phone}}</p>
-                    <p><md-icon class="mdi mdi-email"></md-icon>{{classified.contact.email}}</p>
-                </div>
-                
-                <div layout=row>
-                    <md-button class="" ng-click="showContact=true" ng-show="!showContact">Contact</md-button>
-                    <md-button class="" ng-click="showContact=false" ng-show="showContact">Details</md-button>
-                    <md-button class="" ng-click="showAdmin=true" ng-show="!showAdmin">Admin</md-button>
-                    <md-button class="" ng-click="showAdmin=false" ng-show="showAdmin">Close</md-button>
-                </div>
-                
-                <div class="classified-admin" ng-if="showAdmin">
-                    <h3>Admin</h3>
-                    <div layout="row">
-                        <md-button class="md-primary" ng-click="editClassified(classified)">Edit</md-button>
-                        <md-button class="md-warn" ng-click="deleteClassified($event, classified)">Delete</md-button>
-                    </div>
-                </div>
-                
-            </md-card-content>
-        </md-card>
-    </md-content>
+    <ui-view></ui-view>
     
     <script src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.5/lodash.min.js'></script>
     <script src='node_modules/angular/angular.min.js'></script>
@@ -132,8 +19,12 @@
     <script src='node_modules/angular-aria/angular-aria.min.js'></script>
     <script src='node_modules/angular-messages/angular-messages.min.js'></script>
     <script src='node_modules/angular-material/angular-material.min.js'></script>
+    <script src='node_modules/angular-ui-router/release/angular-ui-router.min.js'></script>
     <script src="scripts/app.js"></script>
-    <script src="components/classifiedsCtrl.js"></script>
-    <script src="components/classifiedsFac.js"></script>
+    <script src="components/classifieds/classifiedsCtrl.js"></script>
+    <script src="components/classifieds/classifiedsFac.js"></script>
+    <script src="components/classifieds/edit/editClassifiedCtrl.js"></script>
+    <script src="components/classifieds/new/newClassifiedCtrl.js"></script>
+    
 </body>
 </html>
